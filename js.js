@@ -19,10 +19,12 @@ function navigateTo(pageId) {
 
     // 메인 페이지가 아닐 때만 상단 '메인으로 돌아가기' 버튼 표시
     const homeBtn = document.getElementById('homeBtn');
-    if (pageId === 'home') {
-        homeBtn.classList.add('hidden');
-    } else {
-        homeBtn.classList.remove('hidden');
+    if (homeBtn) {
+        if (pageId === 'home') {
+            homeBtn.classList.add('hidden');
+        } else {
+            homeBtn.classList.remove('hidden');
+        }
     }
 
     // 페이지 이동 시 스크롤을 맨 위로 부드럽게 이동
@@ -43,6 +45,7 @@ function toggleDarkMode() {
 function changeBoxColor() {
     const box = document.getElementById('colorPreviewBox');
     const text = document.getElementById('previewText');
+    if (!box || !text) return;
 
     // 적용할 색상과 문구 후보들
     const themes = [
@@ -69,9 +72,9 @@ function changeBoxColor() {
  * ============================================================================
  */
 function calculateTotal() {
-    const price = Number(document.getElementById('calcPrice').value) || 0;
-    const qty = Number(document.getElementById('calcQty').value) || 0;
-    const isVip = document.getElementById('calcVip').checked;
+    const price = Number(document.getElementById('calcPrice')?.value) || 0;
+    const qty = Number(document.getElementById('calcQty')?.value) || 0;
+    const isVip = document.getElementById('calcVip')?.checked || false;
 
     const subtotal = price * qty;
     const discount = isVip ? Math.floor(subtotal * 0.1) : 0;
@@ -91,11 +94,12 @@ function calculateTotal() {
  */
 function addTodo(defaultText = null) {
     const input = document.getElementById('todoInput');
-    const text = defaultText || input.value.trim();
+    const text = defaultText || (input ? input.value.trim() : '');
 
     if (!text) return; // 빈 값이면 무시
 
     const todoList = document.getElementById('todoList');
+    if (!todoList) return;
 
     // 새로운 <li> 태그 생성
     const li = document.createElement('li');
@@ -115,7 +119,7 @@ function addTodo(defaultText = null) {
 
     todoList.appendChild(li);
 
-    if (!defaultText) {
+    if (!defaultText && input) {
         input.value = ''; // 입력창 비우기
         input.focus();
     }
@@ -128,9 +132,10 @@ function addTodo(defaultText = null) {
  * ============================================================================
  */
 function simulateServerSend() {
-    const name = document.getElementById('apiName').value.trim() || '익명 사용자';
-    const msg = document.getElementById('apiMessage').value.trim() || '테스트 메시지입니다.';
+    const name = document.getElementById('apiName')?.value.trim() || '익명 사용자';
+    const msg = document.getElementById('apiMessage')?.value.trim() || '테스트 메시지입니다.';
     const consoleBox = document.getElementById('apiConsole');
+    if (!consoleBox) return;
 
     // 전송할 데이터를 JSON 객체 형태로 포장
     const payload = {
