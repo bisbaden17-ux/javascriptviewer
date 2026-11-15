@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 핵심 기능 체험하기</title>
+    <!-- 깔끔한 모던 디자인을 위한 Tailwind CSS 로드 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Noto Sans KR -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <script>
+        // Tailwind 다크모드 클래스 기반 설정
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans KR', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- 상단 네비게이션 바 -->
+    <header class="bg-white dark:bg-slate-800 shadow-sm sticky top-0 z-10 transition-colors duration-300">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+            <button onclick="navigateTo('home')" class="flex items-center space-x-2 text-xl font-bold text-indigo-600 dark:text-indigo-400 hover:opacity-80 transition">
+                <span>⚡</span>
+                <span>JS 기능 체험소</span>
+            </button>
+            <button id="homeBtn" onclick="navigateTo('home')" class="hidden px-4 py-2 text-sm font-medium bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg transition">
+                ← 메인으로 돌아가기
+            </button>
+        </div>
+    </header>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main class="flex-grow max-w-4xl w-full mx-auto px-4 py-8">
+
+        <!-- [페이지 0] 메인 홈 (기능 선택 메뉴) -->
+        <section id="page-home" class="page-section space-y-6">
+            <div class="text-center space-y-3 py-6">
+                <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">JavaScript가 하는 일 체험하기</h1>
+                <p class="text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+                    HTML이 웹사이트의 뼈대라면, JS는 웹사이트에 생명을 불어넣습니다.<br>
+                    아래 버튼을 눌러 각각의 하위 페이지에서 실제 작동하는 기능을 테스트해 보세요!
+                </p>
+            </div>
+
+            <!-- 4가지 기능 이동 버튼 그리드 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- 카드 1 -->
+                <button onclick="navigateTo('dom')" class="text-left p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-md transition group">
+                    <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                        🎨
+                    </div>
+                    <h2 class="text-lg font-bold mb-1">1. 화면 및 디자인 실시간 제어</h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">새로고침 없이 다크모드를 켜거나 글자 크기, 배경색 등을 즉각적으로 변경합니다.</p>
+                </button>
+
+                <!-- 카드 2 -->
+                <button onclick="navigateTo('calc')" class="text-left p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-400 hover:shadow-md transition group">
+                    <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                        🧮
+                    </div>
+                    <h2 class="text-lg font-bold mb-1">2. 실시간 데이터 계산기</h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">사용자 입력값을 감지하여 견적 금액, 할인율, 부가세 등을 자동으로 계산합니다.</p>
+                </button>
+
+                <!-- 카드 3 -->
+                <button onclick="navigateTo('todo')" class="text-left p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 hover:border-amber-500 dark:hover:border-amber-400 hover:shadow-md transition group">
+                    <div class="w-12 h-12 bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                        📝
+                    </div>
+                    <h2 class="text-lg font-bold mb-1">3. 동적 리스트 (할 일 목록)</h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">새로운 HTML 요소를 즉석에서 만들어 화면에 추가하고, 완료 체크 및 삭제를 처리합니다.</p>
+                </button>
+
+                <!-- 카드 4 -->
+                <button onclick="navigateTo('api')" class="text-left p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 hover:border-rose-500 dark:hover:border-rose-400 hover:shadow-md transition group">
+                    <div class="w-12 h-12 bg-rose-100 dark:bg-rose-900/50 text-rose-600 dark:text-rose-400 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                        🌐
+                    </div>
+                    <h2 class="text-lg font-bold mb-1">4. 외부 서버(시트) 데이터 통신</h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">구글 스프레드시트(.gs)나 외부 API 서버로 데이터를 보내고 받아오는 과정을 체험합니다.</p>
+                </button>
+            </div>
+        </section>
+
+        <!-- [페이지 1] 화면 및 디자인 실시간 제어 -->
+        <section id="page-dom" class="page-section hidden space-y-6">
+            <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-6">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">기능 01</span>
+                    <h2 class="text-2xl font-bold mt-1">화면 및 디자인 실시간 제어 (DOM 조작)</h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">JS가 HTML 태그의 클래스와 스타일을 실시간으로 바꾸는 기능입니다.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+                    <!-- 다크모드 토글 -->
+                    <div class="p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl flex items-center justify-between">
+                        <div>
+                            <h3 class="font-semibold">다크 모드 전환</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">전체 테마 색상을 반전시킵니다.</p>
+                        </div>
+                        <button onclick="toggleDarkMode()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition">
+                            테마 바꾸기
+                        </button>
+                    </div>
+
+                    <!-- 텍스트 변경 및 스타일 조작 -->
+                    <div class="p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl flex items-center justify-between">
+                        <div>
+                            <h3 class="font-semibold">박스 색상 랜덤 변경</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">아래 미리보기 박스의 색상을 바꿉니다.</p>
+                        </div>
+                        <button onclick="changeBoxColor()" class="px-4 py-2 bg-slate-800 dark:bg-slate-200 text-white dark:text-slate-900 text-sm font-medium rounded-lg transition">
+                            색상 뽑기
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 결과 확인 박스 -->
+                <div id="colorPreviewBox" class="p-8 rounded-xl bg-indigo-500 text-white text-center transition-all duration-300">
+                    <p id="previewText" class="text-lg font-bold">버튼을 눌러 제 색깔과 글자를 바꿔보세요!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- [페이지 2] 실시간 데이터 계산기 -->
+        <section id="page-calc" class="page-section hidden space-y-6">
+            <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-6">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">기능 02</span>
+                    <h2 class="text-2xl font-bold mt-1">실시간 자동 견적 계산기</h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">사용자가 숫자를 입력하거나 옵션을 선택하는 즉시 JS가 수학 연산을 수행합니다.</p>
+                </div>
+
+                <div class="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">상품 단가 (원)</label>
+                        <input type="number" id="calcPrice" value="15000" min="0" step="1000" oninput="calculateTotal()"
+                            class="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-1">구매 수량 (개)</label>
+                        <input type="number" id="calcQty" value="2" min="1" max="100" oninput="calculateTotal()"
+                            class="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none">
+                    </div>
+
+                    <div class="flex items-center space-x-2 pt-2">
+                        <input type="checkbox" id="calcVip" onchange="calculateTotal()" class="w-5 h-5 accent-emerald-600 rounded">
+                        <label for="calcVip" class="text-sm font-medium cursor-pointer">VIP 회원 10% 특별 할인 적용</label>
+                    </div>
+                </div>
+
+                <!-- 계산 결과 표시 -->
+                <div class="p-6 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-xl space-y-2">
+                    <div class="flex justify-between text-sm text-slate-600 dark:text-slate-400">
+                        <span>기본 합계:</span>
+                        <span id="resSubtotal">30,000원</span>
+                    </div>
+                    <div class="flex justify-between text-sm text-rose-500">
+                        <span>할인 금액:</span>
+                        <span id="resDiscount">- 0원</span>
+                    </div>
+                    <div class="flex justify-between text-xl font-bold text-emerald-700 dark:text-emerald-400 pt-2 border-t border-emerald-200 dark:border-emerald-800">
+                        <span>최종 결제 금액:</span>
+                        <span id="resTotal">30,000원</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- [페이지 3] 동적 리스트 (할 일 목록) -->
+        <section id="page-todo" class="page-section hidden space-y-6">
+            <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-6">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">기능 03</span>
+                    <h2 class="text-2xl font-bold mt-1">동적 요소 추가/삭제 (To-Do 리스트)</h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">HTML 파일에 미리 적어두지 않은 새로운 항목을 JS가 실시간으로 생성하고 지웁니다.</p>
+                </div>
+
+                <div class="flex space-x-2 pt-4 border-t border-slate-100 dark:border-slate-700">
+                    <input type="text" id="todoInput" placeholder="새로운 할 일을 입력하세요..." onkeypress="if(event.key === 'Enter') addTodo()"
+                        class="flex-grow p-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 focus:ring-2 focus:ring-amber-500 outline-none">
+                    <button onclick="addTodo()" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition shrink-0">
+                        추가
+                    </button>
+                </div>
+
+                <!-- 항목이 추가될 리스트 영역 -->
+                <ul id="todoList" class="space-y-2">
+                    <!-- JS로 기본 샘플 항목이 채워집니다 -->
+                </ul>
+            </div>
+        </section>
+
+        <!-- [페이지 4] 외부 서버 데이터 통신 -->
+        <section id="page-api" class="page-section hidden space-y-6">
+            <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 space-y-6">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400">기능 04</span>
+                    <h2 class="text-2xl font-bold mt-1">외부 서버(구글 시트) 통신 원리</h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                        깃허브 웹페이지에서 입력한 데이터를 구글 앱스 스크립트(.gs)로 전송하거나, 외부 API 데이터를 불러오는 과정입니다.
+                    </p>
+                </div>
+
+                <div class="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <input type="text" id="apiName" placeholder="작성자 이름 (예: 홍길동)"
+                            class="p-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 outline-none">
+                        <input type="text" id="apiMessage" placeholder="전송할 메시지 (예: 출석 체크합니다)"
+                            class="p-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 outline-none">
+                    </div>
+                    <button onclick="simulateServerSend()" class="w-full py-3 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl transition">
+                        외부 서버로 데이터 전송하기 (시뮬레이션)
+                    </button>
+                </div>
+
+                <!-- 통신 상태 로그 창 -->
+                <div class="bg-slate-900 text-emerald-400 font-mono text-xs sm:text-sm p-4 rounded-xl space-y-1 min-h-[140px]" id="apiConsole">
+                    <p class="text-slate-400">// 서버 통신 대기 중...</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 하단 푸터 -->
+    <footer class="text-center py-6 text-xs text-slate-400 dark:text-slate-500">
+        GitHub Pages 배포용 HTML + JS 예제 프로젝트
+    </footer>
+
+    <!-- 분리된 JavaScript 파일 연결 -->
+    <script src="script.js"></script>
+</body>
+</html>
