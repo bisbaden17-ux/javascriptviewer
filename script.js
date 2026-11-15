@@ -164,5 +164,5 @@ function simulateServerSend() {
 window.addEventListener('DOMContentLoaded', () => {
     // 할 일 목록에 기본 예시 2개 추가
     addTodo('깃허브 저장소(Repository) 생성하기');
-    addTodo('index.html 과 script.js 파일 업로드하기');
+    addTodo('index.html 과 script.js 파일 함께 업로드하기');
 });
